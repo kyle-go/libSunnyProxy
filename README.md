@@ -1,6 +1,6 @@
 ### libSunnyProxy
 
-A simple http proxy in modern c++(14), with [PAC](https://en.wikipedia.org/wiki/PAC) configuration.
+A simple http proxy in modern c++(14), with [PAC](https://en.wikipedia.org/wiki/Proxy_auto-config) configuration.
 
 Requirements:
 
