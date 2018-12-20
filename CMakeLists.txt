@@ -3,11 +3,6 @@ project(demo)
 
 SET(CMAKE_CXX_STANDARD 14)
 
-if(MSVC)
-add_definitions(-DUNICODE -D_UNICODE)
-add_definitions(-D_WIN32_WINNT=0x0501)
-endif()
-
 set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost 1.67.0 REQUIRED COMPONENTS system thread)
 

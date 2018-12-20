@@ -2,6 +2,7 @@
 #include <iostream>
 #include <functional>
 #include <boost/asio.hpp>
+#include <boost/core/noncopyable.hpp>
 
 using boost::asio::ip::tcp;
 

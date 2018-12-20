@@ -8,6 +8,10 @@
 #include <mutex>
 #include <boost/asio.hpp>
 
+#ifdef WIN32
+#define UNICODE
+#define _UNICODE
+#endif
 using namespace sunny;
 using boost::asio::ip::tcp;
 
@@ -21,7 +25,7 @@ namespace sunny {
             return false;
         }
         result = RegSetValueEx(hSubKey,
-            L"AutoConfigURL",
+            (LPTSTR)L"AutoConfigURL",
             0,
             REG_SZ,
             (const BYTE*)url.c_str(),
@@ -42,7 +46,7 @@ namespace sunny {
             return false;
         }
 
-        result = RegDeleteValue(hSubKey, L"AutoConfigURL");
+        result = RegDeleteValue(hSubKey, (LPTSTR)L"AutoConfigURL");
         RegCloseKey(hSubKey);
         return (result == ERROR_SUCCESS || result == ERROR_FILE_NOT_FOUND);
 #else
