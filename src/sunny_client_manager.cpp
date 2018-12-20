@@ -18,14 +18,14 @@ using boost::asio::ip::tcp;
 namespace sunny {
     auto add_reg_pac = [](const std::wstring& url) {
 #ifdef WIN32
-        HKEY hSubKey;
-        LSTATUS result = RegOpenKeyEx(HKEY_CURRENT_USER,
-            (LPTSTR)L"Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", 0, KEY_WRITE, &hSubKey);
+		HKEY hSubKey;
+        LSTATUS result = RegOpenKeyExW(HKEY_CURRENT_USER,
+            (LPCWSTR)L"Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", 0, KEY_WRITE, &hSubKey);
         if (result != ERROR_SUCCESS) {
             return false;
         }
-        result = RegSetValueEx(hSubKey,
-            (LPTSTR)L"AutoConfigURL",
+        result = RegSetValueExW(hSubKey,
+            (LPCWSTR)L"AutoConfigURL",
             0,
             REG_SZ,
             (const BYTE*)url.c_str(),
@@ -33,20 +33,20 @@ namespace sunny {
         RegCloseKey(hSubKey);
         return (result == ERROR_SUCCESS);
 #else
-        return false;
+		return false;
 #endif
     };
 
     auto delete_reg_pac = []() {
 #ifdef WIN32
         HKEY hSubKey;
-        LSTATUS result = RegOpenKeyEx(HKEY_CURRENT_USER,
-            (LPTSTR)L"Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", 0, KEY_SET_VALUE, &hSubKey);
+        LSTATUS result = RegOpenKeyExW(HKEY_CURRENT_USER,
+            (LPCWSTR)L"Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", 0, KEY_SET_VALUE, &hSubKey);
         if (result != ERROR_SUCCESS) {
             return false;
         }
 
-        result = RegDeleteValue(hSubKey, (LPTSTR)L"AutoConfigURL");
+        result = RegDeleteValueW(hSubKey, (LPCWSTR)L"AutoConfigURL");
         RegCloseKey(hSubKey);
         return (result == ERROR_SUCCESS || result == ERROR_FILE_NOT_FOUND);
 #else
