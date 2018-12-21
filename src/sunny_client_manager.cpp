@@ -8,47 +8,32 @@
 #include <mutex>
 #include <boost/asio.hpp>
 
-#ifdef WIN32
-#define UNICODE
-#define _UNICODE
-#endif
 using namespace sunny;
 using boost::asio::ip::tcp;
+
+#ifdef WIN32
+extern "C" {
+    int sysproxy_main(int argc, LPTSTR argv[]);
+}
+#endif
 
 namespace sunny {
     auto add_reg_pac = [](const std::wstring& url) {
 #ifdef WIN32
-		HKEY hSubKey;
-        LSTATUS result = RegOpenKeyExW(HKEY_CURRENT_USER,
-            (LPCWSTR)L"Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", 0, KEY_WRITE, &hSubKey);
-        if (result != ERROR_SUCCESS) {
-            return false;
-        }
-        result = RegSetValueExW(hSubKey,
-            (LPCWSTR)L"AutoConfigURL",
-            0,
-            REG_SZ,
-            (const BYTE*)url.c_str(),
-            2 * url.length());
-        RegCloseKey(hSubKey);
-        return (result == ERROR_SUCCESS);
+        LPTSTR argv[3] = { 0 };
+        argv[1] = L"pac";
+        argv[2] = (LPWSTR)url.c_str();
+        sysproxy_main(3, argv);
 #else
-		return false;
+        return false;
 #endif
     };
 
     auto delete_reg_pac = []() {
 #ifdef WIN32
-        HKEY hSubKey;
-        LSTATUS result = RegOpenKeyExW(HKEY_CURRENT_USER,
-            (LPCWSTR)L"Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", 0, KEY_SET_VALUE, &hSubKey);
-        if (result != ERROR_SUCCESS) {
-            return false;
-        }
-
-        result = RegDeleteValueW(hSubKey, (LPCWSTR)L"AutoConfigURL");
-        RegCloseKey(hSubKey);
-        return (result == ERROR_SUCCESS || result == ERROR_FILE_NOT_FOUND);
+        LPTSTR argv[2] = { 0 };
+        argv[1] = L"off";
+        sysproxy_main(2, argv);
 #else
         return false;
 #endif
