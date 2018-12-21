@@ -1,7 +1,0 @@
-﻿  Building Custom Rule C:/Users/kyles/Documents/GitHub/libSunnyProxy/CMakeLists.txt
-  CMake does not need to re-run because C:/Users/kyles/Documents/GitHub/libSunnyProxy/build/CMakeFiles/generate.stamp is up-to-date.
-  client.cpp
-  sunny_client_manager.cpp
-  正在生成代码...
-  sysproxy.c
-  client.vcxproj -> C:\Users\kyles\Documents\GitHub\libSunnyProxy\build\MinSizeRel\client.exe

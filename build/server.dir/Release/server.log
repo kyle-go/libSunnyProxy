@@ -1,6 +1,0 @@
-﻿  Building Custom Rule C:/Users/kyles/Documents/GitHub/libSunnyProxy/CMakeLists.txt
-  CMake does not need to re-run because C:/Users/kyles/Documents/GitHub/libSunnyProxy/build/CMakeFiles/generate.stamp is up-to-date.
-  server.cpp
-  sunny_server_manager.cpp
-  正在生成代码...
-  server.vcxproj -> C:\Users\kyles\Documents\GitHub\libSunnyProxy\build\Release\server.exe
